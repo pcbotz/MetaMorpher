@@ -55,6 +55,7 @@ EXTRACT_ENABLED = True
 MULTITASK_ENABLED = True
 STREAMREMOVE_ENABLED = True
 COMPRESS_ENABLED = True
+SWAP_INDEX_ENABLED = True
 
 #varibles for streameremove
 selected_streams = set()
