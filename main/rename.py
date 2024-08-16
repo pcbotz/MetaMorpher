@@ -19,7 +19,7 @@ from main.utils import heroku_restart, upload_files, download_media
 import aiohttp
 from pyrogram.errors import RPCError, FloodWait
 import asyncio
-from main.ffmpeg import remove_all_tags, change_video_metadata, generate_sample_video, add_photo_attachment, merge_videos, unzip_file, extract_audio_stream, extract_subtitle_stream, extract_video_stream, extract_audios_from_file, extract_subtitles_from_file, extract_video_from_file, get_mediainfo
+from main.ffmpeg import remove_all_tags, change_video_metadata, generate_sample_video, add_photo_attachment, merge_videos, unzip_file, extract_audio_stream, extract_subtitle_stream, extract_video_stream, extract_audios_from_file, extract_subtitles_from_file, extract_video_from_file, get_mediainfo, compress_video
 from googleapiclient.http import MediaFileUpload
 from main.gdrive import upload_to_google_drive, extract_id_from_url, copy_file, get_files_in_folder, drive_service
 from googleapiclient.errors import HttpError
@@ -907,7 +907,7 @@ async def attach_photo(bot, msg: Message):
 # Command handler
 # Command handler for changing audio index
 @Client.on_message(filters.command("swapaudio") & filters.chat(GROUP))
-async def change_index_audio(bot, msg):
+async def swapaudios(bot, msg):
     global SWAP_INDEX_ENABLED
 
     if not SWAP_INDEX_ENABLED:
