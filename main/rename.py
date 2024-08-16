@@ -68,7 +68,6 @@ downloaded = None
 async def bot_settings_command(_, msg):
     await display_bot_settings_inline(msg)
 
-
 # Inline function to display user settings with inline buttons
 async def display_bot_settings_inline(msg):
     global METADATA_ENABLED, PHOTO_ATTACH_ENABLED, MIRROR_ENABLED, RENAME_ENABLED, REMOVETAGS_ENABLED, SWAP_INDEX_ENABLED, MULTITASK_ENABLED, STREAMREMOVE_ENABLED, COMPRESS_ENABLED
@@ -206,8 +205,7 @@ async def update_settings_message(message):
     multitask_status = "✅ Enabled" if MULTITASK_ENABLED else "❌ Disabled"    
     streamremove_status = "✅ Enabled" if STREAMREMOVE_ENABLED else "❌ Disabled"    
     compress_status = "✅ Enabled" if COMPRESS_ENABLED else "❌ Disabled"    
-    
-      
+          
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton("💠", callback_data="sunrises24_bot_updates")],            
@@ -907,7 +905,7 @@ async def attach_photo(bot, msg: Message):
 # Command handler
 # Command handler for changing audio index
 @Client.on_message(filters.command("swapaudio") & filters.chat(GROUP))
-async def swapaudios(bot, msg):
+async def swap_audios(bot, msg):
     global SWAP_INDEX_ENABLED
 
     if not SWAP_INDEX_ENABLED:
@@ -1033,7 +1031,7 @@ async def swapaudios(bot, msg):
 # Command to change index subtitle
 # Command handler for changing subtitle index
 @Client.on_message(filters.command("swapsubtitles") & filters.chat(GROUP))
-async def swapsubtitle(bot, msg):
+async def swap_subtitle(bot, msg):
     global SWAP_INDEX_ENABLED
 
     if not SWAP_INDEX_ENABLED:
