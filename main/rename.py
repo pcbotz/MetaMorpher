@@ -914,10 +914,10 @@ async def swap_audios(bot, msg):
 
     reply = msg.reply_to_message
     if not reply:
-        return await msg.reply_text("Please reply to a media file with the index command\nFormat: `/changeindexaudio a-3 -n filename.mkv` (Audio)")
+        return await msg.reply_text("Please reply to a media file with the index command\nFormat: `/swapaudio a-3-1-2-4 -n filename.mkv` (Audio)")
 
     if len(msg.command) < 3:
-        return await msg.reply_text("Please provide the index command with a filename\nFormat: `/changeindexaudio a-3 -n filename.mkv` (Audio)")
+        return await msg.reply_text("Please provide the index command with a filename\nFormat: `/swapaudio a-3-1-2-4 -n filename.mkv` (Audio)")
 
     index_cmd = None
     output_filename = None
@@ -934,7 +934,7 @@ async def swap_audios(bot, msg):
         return await msg.reply_text("Please provide a filename using the `-n` flag.")
 
     if not index_cmd or not index_cmd.startswith("a-"):
-        return await msg.reply_text("Invalid format. Use `/changeindexaudio a-3 -n filename.mkv` for audio.")
+        return await msg.reply_text("Invalid format. Use `/swapaudio a-3-1-2-4 -n filename.mkv` for audio.")
 
     media = reply.document or reply.audio or reply.video
     if not media:
@@ -1040,10 +1040,10 @@ async def swap_subtitle(bot, msg):
 
     reply = msg.reply_to_message
     if not reply:
-        return await msg.reply_text("Please reply to a media file with the index command\nFormat: `/changeindexsub s-3 -n filename.mkv` (Subtitle)")
+        return await msg.reply_text("Please reply to a media file with the index command\nFormat: `/swapsubtitles s-2-3-1 -n filename.mkv` (Subtitle)")
 
     if len(msg.command) < 3:
-        return await msg.reply_text("Please provide the index command with a filename\nFormat: `/changeindexsub s-3 -n filename.mkv` (Subtitle)")
+        return await msg.reply_text("Please provide the index command with a filename\nFormat: `/swapsubtitles s-2-3-1 -n filename.mkv` (Subtitle)")
 
     index_cmd = None
     output_filename = None
@@ -1060,7 +1060,7 @@ async def swap_subtitle(bot, msg):
         return await msg.reply_text("Please provide a filename using the `-n` flag.")
 
     if not index_cmd or not index_cmd.startswith("s-"):
-        return await msg.reply_text("Invalid format. Use `/changeindexsub s-3 -n filename.mkv` for subtitles.")
+        return await msg.reply_text("Invalid format. Use `/swapsubtitles s-2-3-1 -n filename.mkv` for subtitles.")
 
     media = reply.document or reply.audio or reply.video
     if not media:
@@ -1091,7 +1091,7 @@ async def swap_subtitle(bot, msg):
     # Copy all audio and video streams
     ffmpeg_cmd.extend(['-map', '0:v?', '-map', '0:a?', '-c', 'copy', output_file, '-y'])
 
-    await safe_edit_message(sts, "💠 Changing subtitle indexing... ⚡")
+    await safe_edit_message(sts, "💠 Swap subtitle indexing... ⚡")
     process = await asyncio.create_subprocess_exec(*ffmpeg_cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
     stdout, stderr = await process.communicate()
 
