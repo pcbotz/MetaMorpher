@@ -15,11 +15,11 @@ from pyrogram.errors import MessageNotModified
 from main.utils import progress_message, humanbytes
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup,CallbackQuery
 from config import AUTH_USERS, ADMIN, CAPTION, GROUP
-from main.utils import heroku_restart, upload_files, download_media, get_and_upload_mediainfo
+from main.utils import heroku_restart, upload_files, download_media
 import aiohttp
 from pyrogram.errors import RPCError, FloodWait
 import asyncio
-from main.ffmpeg import remove_all_tags, change_video_metadata, generate_sample_video, add_photo_attachment, merge_videos, unzip_file, extract_audio_stream, extract_subtitle_stream, extract_video_stream, extract_audios_from_file, extract_subtitles_from_file, extract_video_from_file, get_mediainfo, compress_video
+from main.ffmpeg import remove_all_tags, change_video_metadata, generate_sample_video, add_photo_attachment, merge_videos, unzip_file, extract_audio_stream, extract_subtitle_stream, extract_video_stream, extract_audios_from_file, extract_subtitles_from_file, extract_video_from_file, get_mediainfo, compress_video, get_and_upload_mediainfo
 from googleapiclient.http import MediaFileUpload
 from main.gdrive import upload_to_google_drive, extract_id_from_url, copy_file, get_files_in_folder, drive_service
 from googleapiclient.errors import HttpError
@@ -2619,8 +2619,12 @@ Hᴇʀᴇ Is Tʜᴇ Hᴇʟᴘ Fᴏʀ Mʏ Cᴏᴍᴍᴀɴᴅs.
 /gofile - 𝑇ℎ𝑒 𝐹𝑖𝑙𝑒𝑠 𝑈𝑝𝑙𝑜𝑎𝑑 𝑇𝑜 𝐺𝑜𝑓𝑖𝑙𝑒 𝐿𝑖𝑛𝑘 🔗
 /mediainfo - 𝑀𝑒𝑑𝑖𝑎 & 𝑉𝑖𝑑𝑒𝑜 𝐼𝑛𝑓𝑜𝑟𝑚𝑎𝑡𝑖𝑜𝑛 ℹ️ 
 /ytdlleech - 𝐿𝑒𝑒𝑐ℎ 𝑡ℎ𝑒 𝑌𝑜𝑢𝑡𝑢𝑏𝑒 𝐿𝑖𝑛𝑘𝑠
-/changeindexaudio - 𝑅𝑒𝑜𝑟𝑑𝑒𝑟 𝑡ℎ𝑒 𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒 [a-1  𝑓𝑜𝑟 𝑟𝑒𝑚𝑜𝑣𝑒 𝑎𝑢𝑑𝑖𝑜 , a-2-1-3-4  𝑓𝑜𝑟 𝑠𝑤𝑎𝑝 𝑎𝑢𝑑𝑖𝑜]
-/changeindexsub - 𝑅𝑒𝑜𝑟𝑑𝑒𝑟 𝑡ℎ𝑒 𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒 [s-1  𝑓𝑜𝑟 𝑟𝑒𝑚𝑜𝑣𝑒 𝑠𝑢𝑏𝑡𝑖𝑡𝑙𝑒 , s-2-1-3-4  𝑓𝑜𝑟 𝑠𝑤𝑎𝑝 𝑠𝑢𝑏𝑡𝑖𝑡𝑙𝑒]
+/streamremove  - 𝑅𝑒𝑚𝑜𝑣𝑒 𝐴𝑢𝑑𝑖𝑜𝑠 𝑜𝑟 𝑆𝑢𝑏𝑡𝑖𝑡𝑙𝑒𝑠
+/multitaskfile - 𝐹𝑜𝑟 𝐹𝑖𝑙𝑒 𝐶ℎ𝑎𝑛𝑔𝑒𝑚𝑒𝑡𝑎𝑑𝑎𝑡𝑎, 𝑅𝑒𝑛𝑎𝑚𝑒, 𝐶ℎ𝑎𝑛𝑔𝑒𝑖𝑛𝑑𝑒𝑥𝑎𝑢𝑑𝑖𝑜, 𝐶ℎ𝑎𝑛𝑔𝑒𝑖𝑛𝑑𝑒𝑥𝑠𝑢𝑏 = 𝑚𝑢𝑙𝑡𝑖𝑡𝑎𝑠𝑘𝑓𝑖𝑙𝑒 
+/multitasklink - 𝐹𝑜𝑟 𝑙𝑖𝑛𝑘  [𝑊𝑜𝑟𝑘𝑒𝑟𝑠 & 𝑆𝑒𝑒𝑑𝑟 𝐿𝑖𝑛𝑘𝑠] 𝑀𝑒𝑡𝑎𝑑𝑎𝑡𝑎, 𝑅𝑒𝑛𝑎𝑚𝑒, 𝐼𝑛𝑑𝑒𝑥𝑎𝑢𝑑𝑖𝑜, 𝐼𝑛𝑑𝑒𝑥𝑠𝑢𝑏 = 𝑚𝑢𝑙𝑡𝑖𝑡𝑎𝑠𝑘𝑙𝑖𝑛𝑘
+/compress - 𝑐𝑜𝑚𝑝𝑟𝑒𝑠𝑠 𝑡ℎ𝑒 𝑓𝑖𝑙𝑒 𝑎𝑠 480𝑝 ,𝑙𝑖𝑏𝑜𝑝𝑢𝑠[𝐴𝑛𝑖𝑚𝑒 & 𝑊𝑒𝑏𝑠𝑒𝑟𝑖𝑒𝑠 𝐵𝑒𝑠𝑡]
+/swapaudio - 𝑅𝑒𝑜𝑟𝑑𝑒𝑟 𝑡ℎ𝑒 𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒 [a-2-1-3-4  𝑓𝑜𝑟 𝑠𝑤𝑎𝑝 𝑎𝑢𝑑𝑖𝑜]
+/swapsubitles - 𝑅𝑒𝑜𝑟𝑑𝑒𝑟 𝑡ℎ𝑒 𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒 [s-2-1-3-4  𝑓𝑜𝑟 𝑠𝑤𝑎𝑝 𝑠𝑢𝑏𝑡𝑖𝑡𝑙𝑒]
 /changemetadata - 𝑇𝑟𝑎𝑛𝑠𝑓𝑜𝑟𝑚 𝑡ℎ𝑒 𝑚𝑒𝑡𝑎𝑑𝑎𝑡𝑎
 /removetags - 𝑇𝑜 𝑅𝑒𝑚𝑜𝑣𝑒 𝐴𝑙𝑙 𝑀𝑒𝑡𝑎𝑑𝑎𝑡𝑎 𝑇𝑎𝑔𝑠
 /merge - 𝑆𝑒𝑛𝑑 𝑢𝑝 𝑡𝑜 10 𝑣𝑖𝑑𝑒𝑜/𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡 𝑓𝑖𝑙𝑒𝑠 𝑜𝑛𝑒 𝑏𝑦 𝑜𝑛𝑒.
