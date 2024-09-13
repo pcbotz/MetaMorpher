@@ -15,7 +15,7 @@ from pyrogram.errors import MessageNotModified
 from main.utils import progress_message, humanbytes
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup,CallbackQuery
 from config import AUTH_USERS, ADMIN, CAPTION, GROUP
-from main.utils import heroku_restart, upload_files, download_media
+from main.utils import heroku_restart, upload_files, download_media, download_file_from_drive
 import aiohttp
 from pyrogram.errors import RPCError, FloodWait
 import asyncio
@@ -3434,10 +3434,10 @@ async def compress_media(bot, msg: Message):
     await sts.delete()
 
 @Client.on_message(filters.command("dleech") & filters.chat(GROUP))
-async def rename_leech(bot, msg: Message):
-    global RENAME_ENABLED
+async def drive_leech(bot, msg: Message):
+    global MIRROR_ENABLED
 
-    if not RENAME_ENABLED:
+    if not MIRROR_ENABLED:
         return await msg.reply_text("Rename feature is currently disabled.")
 
     user_id = msg.from_user.id
