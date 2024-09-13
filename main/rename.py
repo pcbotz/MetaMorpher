@@ -1688,7 +1688,7 @@ async def sample_video(bot, msg):
     await sts.delete()
 
  # Define restart_app command
-@Client.on_message(filters.command("restart") & filters.chat(AUTH_USERS))
+@Client.on_message(filters.command("restartheroku") & filters.chat(AUTH_USERS))
 async def restart_app(bot, msg):
     if not f'{msg.from_user.id}' == f'{int(AUTH_USERS)}':
         return await msg.reply_text("Only authorized user can restart!")
