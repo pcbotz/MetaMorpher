@@ -79,3 +79,10 @@
   /multitasklink 
   /compress
 • Implement Some Help Command 
+
+──「 Version  V.2.7 」──
+Minor Update 
+• New Commands:
+  /Logs 
+  /Restart 
+  /Dleech (drive link leech) (2GB)
