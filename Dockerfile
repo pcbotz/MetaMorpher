@@ -7,5 +7,5 @@ RUN apt-get update && \
     apt-get install -y ffmpeg
 RUN apt -qq update && apt -qq install -y git wget pv jq wget python3-dev ffmpeg mediainfo
 RUN pip install -r requirements.txt
-CMD ["python3", "update.py"]
+CMD ["python3", "run.sh"]
 #TG:@Sunrises_24
